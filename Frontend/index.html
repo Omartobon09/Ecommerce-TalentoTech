@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClickShoes - E-commerce de Zapatos</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><i class="fas fa-shoe-prints me-2"></i>ClickShoes</a
+        >
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="showSection('home')"
+                >Inicio</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="showSection('productos')"
+                >Productos</a
+              >
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <div id="guest-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showLoginModal()">
+                  <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showRegisterModal()">
+                  <i class="fas fa-user-plus me-1"></i>Registrarse
+                </a>
+              </li>
+            </div>
+            <div id="user-nav" style="display: none">
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('pedidos')">
+                  <i class="fas fa-box me-1"></i>Mis Pedidos
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="toggleCart()">
+                  <i class="fas fa-shopping-cart me-1 position-relative">
+                    <span id="cart-badge" class="badge-cart">0</span> </i
+                  >Carrito
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="fas fa-user me-1"></i
+                  ><span id="user-name">Usuario</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="#" onclick="logout()">
+                      <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="cart-sidebar">
+      <div class="p-3 border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="fas fa-shopping-cart me-2"></i>Mi Carrito
+          </h5>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            onclick="toggleCart()"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="cart-items">
+        <div class="text-center p-4 text-muted">
+          <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+          <p>Tu carrito está vacío</p>
+        </div>
+      </div>
+
+      <div
+        id="cart-footer"
+        class="p-3 border-top mt-auto"
+        style="display: none"
+      >
+        <div class="d-flex justify-content-between mb-3">
+          <strong>Total: $<span id="cart-total">0</span></strong>
+        </div>
+        <button class="btn btn-primary w-100" onclick="proceedToCheckout()">
+          <i class="fas fa-credit-card me-1"></i>Proceder al Pago
+        </button>
+      </div>
+    </div>
+    <div id="home-section">
+      <section class="hero-section">
+        <div class="container">
+          <h1 class="display-4 fw-bold mb-4">Los Mejores Zapatos</h1>
+          <p class="lead mb-4">
+            Encuentra el calzado perfecto para cada ocasión
+          </p>
+          <button
+            class="btn btn-primary btn-lg"
+            onclick="showSection('productos')"
+          >
+            <i class="fas fa-shopping-bag me-2"></i>Ver Productos
+          </button>
+        </div>
+      </section>
+      <section class="py-5">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 border-0">
+                <div class="card-body">
+                  <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                  <h5>Envío Gratis</h5>
+                  <p class="text-muted">En compras superiores a $150.000</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 border-0">
+                <div class="card-body">
+                  <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                  <h5>Calidad Premium</h5>
+                  <p class="text-muted">Zapatos de las mejores marcas</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 border-0">
+                <div class="card-body">
+                  <i class="fas fa-undo fa-3x text-primary mb-3"></i>
+                  <h5>Devolución Fácil</h5>
+                  <p class="text-muted">30 días para devolver tu compra</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sección Productos -->
+    <div id="productos-section" class="section-hidden">
+      <section class="py-5">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-12">
+              <h2 class="text-center mb-4">Nuestros Productos</h2>
+
+              <!-- Filtros -->
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <select class="form-select" id="category-filter">
+                    <option value="">Todas las categorías</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="search-input"
+                      placeholder="Buscar zapatos..."
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      onclick="searchProducts()"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="loading" id="products-loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Cargando productos...</p>
+          </div>
+
+          <div class="row" id="products-container">
+            <!-- Los productos se cargan dinámicamente -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sección Mis Pedidos -->
+    <div id="pedidos-section" class="section-hidden">
+      <section class="py-5">
+        <div class="container">
+          <h2 class="mb-4"><i class="fas fa-box me-2"></i>Mis Pedidos</h2>
+
+          <div class="loading" id="orders-loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Cargando pedidos...</p>
+          </div>
+
+          <div id="orders-container">
+            <!-- Los pedidos se cargan dinámicamente -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="login-email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="login-email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="login-password" class="form-label"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="login-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <p>
+                ¿No tienes cuenta?
+                <a href="#" onclick="showRegisterModal()">Regístrate aquí</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="register-form">
+              <div class="mb-3">
+                <label for="register-name" class="form-label"
+                  >Nombre completo</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="register-name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="register-email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="register-email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="register-phone" class="form-label">Teléfono</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="register-phone"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="register-password" class="form-label"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="register-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-user-plus me-1"></i>Crear Cuenta
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <p>
+                ¿Ya tienes cuenta?
+                <a href="#" onclick="showLoginModal()">Inicia sesión aquí</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Checkout -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-credit-card me-2"></i>Finalizar Compra
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="checkout-form">
+              <h6 class="mb-3">Información de envío</h6>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="checkout-address" class="form-label"
+                    >Dirección de envío</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="checkout-address"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <h6 class="mb-3 mt-4">Método de pago</h6>
+              <div class="mb-3">
+                <select class="form-select" id="payment-method" required>
+                  <option value="">Seleccionar método de pago</option>
+                  <option value="transferencia">Transferencia bancaria</option>
+                  <option value="efectivo">Pago contra entrega</option>
+                  <option value="tarjeta">Tarjeta de crédito</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="checkout-notes" class="form-label"
+                  >Notas adicionales (opcional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="checkout-notes"
+                  rows="2"
+                ></textarea>
+              </div>
+
+              <hr />
+              <div class="d-flex justify-content-between">
+                <strong
+                  >Total a pagar: $<span id="checkout-total">0</span></strong
+                >
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 mt-3">
+                <i class="fas fa-check me-1"></i>Confirmar Pedido
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5><i class="fas fa-shoe-prints me-2"></i>ClickShoes</h5>
+            <p class="text-light">
+              Los mejores zapatos para cada ocasión. Calidad y estilo
+              garantizados.
+            </p>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h6>Enlaces rápidos</h6>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-light text-decoration-none">Inicio</a>
+              </li>
+              <li>
+                <a href="#" class="text-light text-decoration-none"
+                  >Productos</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-light text-decoration-none">Contacto</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h6>Síguenos</h6>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-light"
+                ><i class="fab fa-facebook fa-2x"></i
+              ></a>
+              <a href="#" class="text-light"
+                ><i class="fab fa-instagram fa-2x"></i
+              ></a>
+              <a href="#" class="text-light"
+                ><i class="fab fa-twitter fa-2x"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="text-center">
+          <p class="mb-0">
+            &copy; 2025 ClickShoes. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
